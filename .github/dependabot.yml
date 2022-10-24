@@ -3,4 +3,11 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "08:30"
+      timezone: "Europe/Dublin"
+    commit-message:
+      prefix: "chore: update deps - "
+      include: "scope"
+    assignees:
+      - "MrSarno"
