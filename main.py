@@ -32,7 +32,6 @@ INDENT = "     "
 
 # init
 
-
 def greet_user():
     clear_screen()
     print(INDENT + "Smoke v" + VERSION)
@@ -41,14 +40,12 @@ def greet_user():
 
 # prompt user for Steam User ID
 
-
 def id_prompt():
     steam_user_id = input(INDENT + "Please enter Steam User ID: ")
     return steam_user_id
 
 
 # obtain publisher secret et al
-
 
 def secrets_reader():
     f = open(Path(__file__).parent / "secrets.env", "r")
@@ -69,7 +66,6 @@ def secrets_reader():
 
 
 # send GET request to Valve
-
 
 def send_request(pub_auth_key, steam_user_id, app_id):
     steam_url = "https://partner.steam-api.com/ISteamUser/CheckAppOwnership/v2/"
@@ -125,7 +121,6 @@ def send_request(pub_auth_key, steam_user_id, app_id):
 
 # abort in cases where the status code is not set to 200 (OK)
 
-
 def quit_if_error(r):
     if r.status_code != 200:
         print("\n")
@@ -140,7 +135,6 @@ def quit_if_error(r):
 
 
 # interpret the response
-
 
 def parse_reply(r):
     valves_response = str(r.text[27:])
@@ -157,7 +151,6 @@ def parse_reply(r):
 
 
 # bring the program to an end
-
 
 def end_smoke():
     print("\n")
