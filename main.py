@@ -15,8 +15,6 @@
 ########################################################################################################################
 
 
-# imports
-
 import requests
 import sys
 
@@ -24,33 +22,25 @@ from pathlib import Path
 from utils import clear_screen
 
 
-# consts
-
 VERSION = "1.0"
 INDENT = "     "
 
 
-# init
-
-
 def greet_user():
+    """Print initial text to the screen."""
     clear_screen()
     print(INDENT + "Smoke v" + VERSION)
     print(INDENT + "----------\n")
 
 
-# prompt user for Steam User ID
-
-
 def id_prompt():
+    """Prompt user for a Steam User ID."""
     steam_user_id = input(INDENT + "Please enter Steam User ID: ")
     return steam_user_id
 
 
-# obtain publisher secret et al
-
-
 def secrets_reader():
+    """Access values stored in the .env file."""
     f = open(Path(__file__).parent / "secrets.env", "r")
     lines = []
     for line in f:
@@ -68,10 +58,8 @@ def secrets_reader():
     send_request(pub_auth_key, steam_user_id, app_id)
 
 
-# send GET request to Valve
-
-
 def send_request(pub_auth_key, steam_user_id, app_id):
+    """Send the GET request to Valve's Steam servers."""
     steam_url = "https://partner.steam-api.com/ISteamUser/CheckAppOwnership/v2/"
     steam_url_params = {"key": pub_auth_key, "steamid": steam_user_id, "appid": app_id}
 
@@ -123,10 +111,8 @@ def send_request(pub_auth_key, steam_user_id, app_id):
     quit_if_error(r)
 
 
-# abort in cases where the status code is not set to 200 (OK)
-
-
 def quit_if_error(r):
+    """Abort in cases where the status code is not set to 200 (OK)."""
     if r.status_code != 200:
         print("\n")
         print(INDENT + "[ERROR] Request failed.")
@@ -139,10 +125,8 @@ def quit_if_error(r):
     parse_reply(r)
 
 
-# interpret the response
-
-
 def parse_reply(r):
+    """Interpret the response from Valve's Steam servers in response to our GET request."""
     valves_response = str(r.text[27:])
     print("\n")
     if valves_response.startswith("true"):
@@ -156,18 +140,15 @@ def parse_reply(r):
         )
 
 
-# bring the program to an end
-
-
 def end_smoke():
+    """Bring the program to an end."""
     print("\n")
     input(INDENT + "Press Enter to close...")
     sys.exit()
 
 
-# run
-
 if __name__ == "__main__":
+    """Run program."""
     greet_user()
     steam_user_id = id_prompt()
     secrets_reader()

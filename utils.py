@@ -12,14 +12,10 @@
 ########################################################################################################################
 
 
-# imports
-
 import os
 
 
-# clear screen regardless of OS
-
-
 def clear_screen():
+    """Clears the screen, regardless of the OS."""
     os.system("cls" if os.name == "nt" else "clear")
     print("\n")
